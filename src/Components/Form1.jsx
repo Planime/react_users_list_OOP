@@ -2,19 +2,9 @@ import React, {Component} from "react"
 
 
 
-
 class Form1 extends Component {
 
-    state = {
-        firstName: "",
-        lastName: "",
-        address: "",
-        phone: "",
-        email: "",
-        company: ""
-    };
-
-     onSubmitAddUser = () => {
+    createUser = () => {
 
         let options = {
             method: "POST",
@@ -37,16 +27,22 @@ class Form1 extends Component {
             .then(this.props.postForm)
     };
 
+    editUser = () => {
+        console.log("editUser")
+    }
 
-    onChangeHandler = (e) => {
+    onSubmitAddUser = () => {
 
-        let value = e.target.value;
-        let name = e.target.name;
 
-        this.setState({
-            [name]: value
-        })
+
+        this.props.editable ? (
+           this.createUser()
+        )
+            :
+            this.editUser()
+
     };
+
 
     onSubmitForm = (e) => {
         e.preventDefault();
@@ -55,7 +51,6 @@ class Form1 extends Component {
 
 
     render() {
-        console.log()
         const {
             firstName,
             lastName,
@@ -63,7 +58,7 @@ class Form1 extends Component {
             phone,
             email,
             company
-        } = this.state;
+        } = this.props.formData;
 
 
         return (
@@ -75,28 +70,28 @@ class Form1 extends Component {
                 <h2>Add User</h2>
                 <div>First Name</div>
                 <input
-                    onChange={this.onChangeHandler}
+                    onChange={this.props.onChangeHandler}
                     name="firstName"
                     value={firstName}
                     type="text"/>
 
                 <div>Last Name</div>
                 <input
-                    onChange={this.onChangeHandler}
+                    onChange={this.props.onChangeHandler}
                     name="lastName"
                     value={lastName}
                     type="text"/>
 
                 <div>Address</div>
                 <input
-                    onChange={this.onChangeHandler}
+                    onChange={this.props.onChangeHandler}
                     name="address"
                     value={address}
                     type="text"/>
 
                 <div>Phone</div>
                 <input
-                    onChange={this.onChangeHandler}
+                    onChange={this.props.onChangeHandler}
                     name="phone"
                     value={phone}
                     type="text"/>
@@ -104,14 +99,14 @@ class Form1 extends Component {
 
                 <div>Email</div>
                 <input
-                    onChange={this.onChangeHandler}
+                    onChange={this.props.onChangeHandler}
                     name="email"
                     value={email}
                     type="text"/>
 
                 <div>Company</div>
                 <input
-                    onChange={this.onChangeHandler}
+                    onChange={this.props.onChangeHandler}
                     name="company"
                     value={company}
                     type="text"/>
