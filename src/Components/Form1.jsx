@@ -12,12 +12,12 @@ class Form1 extends Component {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                "firstName": this.state.firstName,
-                "lastName": this.state.lastName,
-                "address": this.state.address,
-                "phone": this.state.phone,
-                "email": this.state.email,
-                "company": this.state.company,
+                "firstName": this.props.formData.firstName,
+                "lastName": this.props.formData.lastName,
+                "address": this.props.formData.address,
+                "phone": this.props.formData.phone,
+                "email": this.props.formData.email,
+                "company": this.props.formData.company,
             })
 
         };
@@ -28,25 +28,36 @@ class Form1 extends Component {
     };
 
     editUser = () => {
-        console.log("editUser")
-    }
+        let options = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "firstName": this.props.formData.firstName,
+                "lastName": this.props.formData.lastName,
+                "address": this.props.formData.address,
+                "phone": this.props.formData.phone,
+                "email": this.props.formData.email,
+                "company": this.props.formData.company,
+            })
+        };
 
-    onSubmitAddUser = () => {
+        console.log(options.body)
 
-
-
-        this.props.editable ? (
-           this.createUser()
-        )
-            :
-            this.editUser()
-
+        fetch(`https://5fec128e573752001730b0f1.mockapi.io/users/${this.props.formData.id}`, options)
+            .then(res => res.json())
+            .then(this.props.postEdit)
     };
 
 
     onSubmitForm = (e) => {
         e.preventDefault();
-        this.onSubmitAddUser()
+
+        !this.props.editable ?
+            this.createUser()
+            :
+            this.editUser()
     };
 
 

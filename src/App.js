@@ -48,6 +48,16 @@ class App extends Component {
         })
     };
 
+    postEdit = (res) => {
+        this.setState((prevState) => {
+            return {
+                usersList: [...prevState.usersList.filter(user => user.id !== res.id), res],
+                editable: false
+            }
+        })
+
+    }
+
     showUserInfo = (e) => {
 
         let userID = e.target.closest("[data-id]")?.dataset.id;
@@ -94,6 +104,7 @@ class App extends Component {
         return (
             <div>
                 <Form1
+                    postEdit={this.postEdit}
                     editable={this.state.editable}
                     postForm={this.postForm}
                     usersList={this.state.usersList}
